@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { GithubAPI } from '../provider/github/api'
 
 import * as dotenv from 'dotenv'
-import { GithubAdapter } from 'src/provider/github/adapter'
-import { ListRepoService } from 'src/domain/service/list'
+import { GithubAdapter } from '../provider/github/adapter'
+import { ListRepoService } from '../domain/service/list'
 
 dotenv.config()
 
