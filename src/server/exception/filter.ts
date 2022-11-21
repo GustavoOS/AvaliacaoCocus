@@ -2,8 +2,6 @@ import { Catch, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { toErrorResponse } from './factory';
 
 
-
-
 @Catch(Error)
 export class ExceptionFilter {
     private readonly logger = new Logger(ExceptionFilter.name);

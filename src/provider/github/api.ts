@@ -2,7 +2,7 @@ import { UserRepo } from '../../domain/entity/UserRepo'
 import { RepoResponse } from './dto/RepoResponse'
 import { BranchResponse } from './dto/BranchResponse'
 import { Branch } from '../../domain/entity/Branch'
-import { Environment } from './env'
+import { Environment } from '../env'
 import { RedisCache } from '../redis/redis'
 
 export class GithubAPI {

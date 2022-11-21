@@ -4,7 +4,7 @@ import { GithubAPI } from '../provider/github/api'
 import * as dotenv from 'dotenv'
 import { GithubAdapter } from '../provider/github/adapter'
 import { ListRepoService } from '../domain/service/list'
-import { Environment } from '../provider/github/env'
+import { Environment } from '../provider/env'
 import { RedisCache } from '../provider/redis/redis'
 import { executeAuthorizedGET } from '../provider/http/fetch'
 import { createClient, RedisClientType } from 'redis'
@@ -33,8 +33,11 @@ export function mountDependencies() {
     return { service, redis, github }
 }
 
-function connectToRedis(env: Environment):RedisClientType<any,any,any> {
-    const client = createClient({ password: env?.REDIS_PASSWORD })
+function connectToRedis(env: Environment): RedisClientType<any, any, any> {
+    const client = createClient({
+        password: env?.REDIS_PASSWORD,
+        socket: { host: env?.REDIS_URL }
+    })
     if (!client.isOpen)
         client.connect()
     return client
