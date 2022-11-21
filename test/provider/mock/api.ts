@@ -6,7 +6,7 @@ export class GithubAPIMock extends GithubAPI {
     constructor(
         private repos: ()=>UserRepo[],
         private branches: ()=>Branch[]
-    ) { super('secret-key')}
+    ) { super(null, null)}
 
     override async getUserRepositories(owner: string) { return this.repos() }
     override async fillRepoBranches(repo: UserRepo) {

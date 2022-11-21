@@ -1,14 +1,13 @@
-import * as dotenv from 'dotenv'
+/* istanbul ignore file */
+
 import { UserRepo } from '../../src/domain/entity/UserRepo'
 import { FetchError } from '../../src/exception/fetch'
-import { GithubAPI } from '../../src/provider/github/api'
+import { disconnectRedis, mountDependencies } from '../../src/server/app.service'
 
-dotenv.config()
 
-const github = new GithubAPI(process.env.API_KEY)
+const {service, redis, github} = mountDependencies()
 
 describe("Test repo fetch from API", () => {
-    
 
     it("After true call, every repo should belong to same owner", async () => {
         const owner = "GustavoOS"
@@ -27,15 +26,16 @@ describe("Test repo fetch from API", () => {
         github.getUserRepositories("kjhgfghjkjhghjk").catch(
             e => expect(e.status).toEqual(404))
     })
-})
 
-describe("Test branches fetch from API", () => {
     it("with a valid repo, fetch branches", async () => {
-        const repo = new UserRepo("ARMAria", "GustavoOS", false)
+        const repo = new UserRepo("AvaliacaoCocus", "GustavoOS", false)
         await github.fillRepoBranches(repo)
         expect(repo.branches.length).toEqual(1)
         const [branch] = repo.branches
         expect(branch.name).toEqual("master")
         expect([...branch.lastCommit].length).toBeGreaterThan(0)
     })
+
+
+    afterAll(()=> disconnectRedis(redis))
 })

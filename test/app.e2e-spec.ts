@@ -1,7 +1,10 @@
+/* istanbul ignore file */
+
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/server/app.module';
+import { ExceptionFilter } from '../src/server/exception/filter';
 
 describe('AppController (e2e)', () => {
     let app: INestApplication;
@@ -12,6 +15,7 @@ describe('AppController (e2e)', () => {
         }).compile();
 
         app = moduleFixture.createNestApplication();
+        app.useGlobalFilters(new ExceptionFilter())
         await app.init();
     });
 

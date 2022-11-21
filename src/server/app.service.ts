@@ -4,13 +4,43 @@ import { GithubAPI } from '../provider/github/api'
 import * as dotenv from 'dotenv'
 import { GithubAdapter } from '../provider/github/adapter'
 import { ListRepoService } from '../domain/service/list'
+import { Environment } from '../provider/github/env'
+import { RedisCache } from '../provider/redis/redis'
+import { executeAuthorizedGET } from '../provider/http/fetch'
+import { createClient, RedisClientType } from 'redis'
 
-dotenv.config()
 
 @Injectable()
 export class AppService {
-  async getRepo(user: string) {
-    const service = new ListRepoService(new GithubAdapter(new GithubAPI(process.env.API_KEY)))
-    return await service.listUserReposWithoutFork(user)
-  }
+    async getRepo(user: string) {
+        const { service, redis } = mountDependencies()
+        const result = await service.listUserReposWithoutFork(user)
+        disconnectRedis(redis)
+        return result
+    }
+}
+
+export function mountDependencies() {
+    dotenv.config()
+    const env: Environment = process.env as unknown as Environment
+    const redis = connectToRedis(env)
+    const cache = new RedisCache(
+        redis,
+        { EX: 3600 },
+        executeAuthorizedGET)
+    const github = new GithubAPI(env, cache)
+    const service = new ListRepoService(new GithubAdapter(github))
+    return { service, redis, github }
+}
+
+function connectToRedis(env: Environment):RedisClientType<any,any,any> {
+    const client = createClient({ password: env?.REDIS_PASSWORD })
+    if (!client.isOpen)
+        client.connect()
+    return client
+}
+
+export function disconnectRedis(client: RedisClientType<any, any, any>) {
+    if (client.isOpen)
+        client.quit()
 }
