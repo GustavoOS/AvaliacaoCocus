@@ -26,7 +26,7 @@ export function mountDependencies() {
     const redis = connectToRedis(env)
     const cache = new RedisCache(
         redis,
-        { EX: 3600 },
+        { EX: env.REDIS_EXPIRATION_IN_SECONDS },
         executeAuthorizedGET)
     const github = new GithubAPI(env, cache)
     const service = new ListRepoService(new GithubAdapter(github))

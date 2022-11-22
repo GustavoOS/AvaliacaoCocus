@@ -1,7 +1,9 @@
 import { createClient } from "redis"
+import { Environment } from "../../src/provider/env"
 import { RedisCache } from "../../src/provider/redis/redis"
 
-const client = createClient({ password: 'Redis2022!' })
+const env = process.env as unknown as Environment
+const client = createClient({ password: 'Redis2022!', socket: {host: env?.REDIS_URL} })
 let fetch: any
 let redis: RedisCache
 

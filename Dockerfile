@@ -1,5 +1,5 @@
 FROM node:18-alpine3.15
-RUN apk add --no-cache python3 g++ make yarn
+RUN apk add --no-cache python3 g++ make yarn bash
 WORKDIR /app
 COPY . .
 RUN yarn install
