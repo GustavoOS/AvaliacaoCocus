@@ -4,15 +4,15 @@
 
 ## Description
 
-Github Explorer is a project to explore Github API.
+Github Explorer is a project to explore Github API and is intented to show all repositories of a given user that are not forks.
 
-It is written in TypeScript, using [Nest](https://nestjs.com/) framework.
+- Written in TypeScript, using [Nest](https://nestjs.com/) framework.
 
-It can be deployed with [Docker compose](https://docs.docker.com/compose/).
+- Deployed with [Docker compose](https://docs.docker.com/compose/).
 
-It has [Swagger](https://swagger.io/) enabled.
+- Has [Swagger](https://swagger.io/) enabled.
 
-It uses [Redis](https://redis.io/) as cache in order to save API resources
+- Uses [Redis](https://redis.io/) as cache in order to save API resources
 
 
 ## Installation
