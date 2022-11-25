@@ -1,10 +1,10 @@
-import { Controller, Get, Header, Logger, Param, Req } from '@nestjs/common';
-import { ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Logger, Param, Req } from '@nestjs/common';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { validateContentType } from './validator/validator';
 
 @ApiTags('Repositories')
-@Controller('Repositories')
+@Controller('repositories')
 export class AppController {
   private readonly logger = new Logger(AppController.name);
   constructor(private readonly appService: AppService) {}
@@ -14,7 +14,7 @@ export class AppController {
   async getRepos(
     @Param() params: ReposParams,
     @Req() request: Request) {
-    this.logger.warn(`New request for ${params.username}`)
+    this.logger.log(`New request for ${params.username}`)
     validateContentType(request.headers['accept'])
     return await this.appService.getRepo(params.username)
   }

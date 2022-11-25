@@ -1,21 +1,18 @@
-import { RedisClientType, SetOptions } from "redis"
+import { SetOptions } from "redis"
+import { Connection } from "./connection"
 
 
 
 export class RedisCache {
     constructor(
-        private readonly redis: RedisClientType<any, any, any>,
+        private readonly redis: Connection,
         private readonly options: SetOptions,
         private fetch: <T>(url: string, token: string) => Promise<T>
-    ) {
-        redis.on("error", (error) => {
-            throw new Error(`REDIS connection error: ${error}`)
-        })
-    }
+    ) { }
 
     async executeCachedFetchGet<T>(url: string, token: string): Promise<T> {
         const fetched = await this.redis.get(url)
-        if (fetched != null)
+        if (fetched !== null)
             return JSON.parse(fetched)
         return await this.fetchAndStore<T>(url, token)
     }

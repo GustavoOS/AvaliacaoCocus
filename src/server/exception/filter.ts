@@ -1,8 +1,15 @@
-import { Catch, HttpException, HttpStatus, Logger } from '@nestjs/common';
-import { toErrorResponse } from './factory';
+import { Catch, HttpStatus, Logger } from '@nestjs/common';
+import { FetchError } from 'node-fetch';
+import { InvalidUser } from '../../exception/invalid';
+import { toErrorResponse } from '../factory/exception';
+import { InvalidContentType } from './invalid';
 
 
-@Catch(Error)
+@Catch(
+    InvalidUser,
+    InvalidContentType,
+    FetchError
+)
 export class ExceptionFilter {
     private readonly logger = new Logger(ExceptionFilter.name);
 

@@ -1,9 +1,9 @@
-import { UserRepo } from '../../domain/entity/UserRepo'
-import { RepoResponse } from './dto/RepoResponse'
-import { BranchResponse } from './dto/BranchResponse'
 import { Branch } from '../../domain/entity/Branch'
+import { UserRepo } from '../../domain/entity/UserRepo'
 import { Environment } from '../env'
 import { RedisCache } from '../redis/redis'
+import { BranchResponse } from './dto/BranchResponse'
+import { RepoResponse } from './dto/RepoResponse'
 
 export class GithubAPI {
     constructor(private env: Environment, private fetcher: RedisCache) { }

@@ -2,10 +2,11 @@
 
 import { UserRepo } from '../../src/domain/entity/UserRepo'
 import { FetchError } from '../../src/exception/fetch'
-import { disconnectRedis, mountDependencies } from '../../src/server/app.service'
+import { Connection } from '../../src/provider/redis/connection'
+import { mountDependencies } from '../../src/server/factory/configuration'
 
 
-const {service, redis, github} = mountDependencies()
+const {github} = mountDependencies()
 
 describe("Test repo fetch from API", () => {
 
@@ -36,6 +37,5 @@ describe("Test repo fetch from API", () => {
         expect([...branch.lastCommit].length).toBeGreaterThan(0)
     })
 
-
-    afterAll(()=> disconnectRedis(redis))
+    afterAll(Connection.kill)
 })

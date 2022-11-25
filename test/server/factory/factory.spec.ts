@@ -1,7 +1,7 @@
 import { HttpStatus } from "@nestjs/common"
 import { InvalidUser } from "../../../src/exception/invalid";
 import { FetchError } from "../../../src/exception/fetch"
-import { toErrorResponse } from "../../../src/server/exception/factory"
+import { toErrorResponse } from "../../../src/server/factory/exception"
 
 
 describe("test error response factory", () => {
