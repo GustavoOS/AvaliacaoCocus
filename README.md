@@ -19,6 +19,19 @@ Github Explorer is a project to explore Github API and is intented to show all r
 
 Full instalation requires Docker and Docker compose installed.
 
+Before running the app, create a .env file in the following format:
+```
+API_KEY="My Github API key goes inside here"
+REDIS_PASSWORD="Redis2022!"
+REDIS_EXPIRATION_IN_SECONDS=3600
+```
+
+- Check [Github Api Doc](https://docs.github.com/pt/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-personal-access-token-classic) to get the API code
+
+- To change Redis password, you might need to specify it both in .env file and docker-compose.
+
+- Expiration of cache is suggested to 3600 seconds for the limitation of requests per hour.
+
 
 ## Running the app
 
